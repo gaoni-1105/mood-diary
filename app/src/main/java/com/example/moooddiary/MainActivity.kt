@@ -263,7 +263,7 @@ fun MoodDiaryApp() {
             TopAppBar(
                 title = {
                     Text(
-                        "나의 기분 일기",
+                        "Mood Diary",
                         fontWeight = FontWeight.Bold
                     )
                 },
