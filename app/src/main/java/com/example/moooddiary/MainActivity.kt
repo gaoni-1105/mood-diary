@@ -33,7 +33,6 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import com.example.moooddiary.ui.theme.MooodDiaryTheme
 import java.util.*
 
-// 파스텔 색상 정의
 val PastelPink = Color(0xFFFFB6C1)
 val PastelBlue = Color(0xFFADD8E6)
 val PastelYellow = Color(0xFFFFFACD)
@@ -41,7 +40,6 @@ val PastelGreen = Color(0xFF98FB98)
 val PastelPurple = Color(0xFFE6E6FA)
 val PastelPeach = Color(0xFFFFDAB9)
 
-// 표정 그림 함수
 @Composable
 fun MoodFace(mood: Mood, size: Float = 60f) {
     Box(
@@ -50,15 +48,16 @@ fun MoodFace(mood: Mood, size: Float = 60f) {
             .drawBehind {
                 val center = Offset(this.size.width / 2, this.size.height / 2)
                 val radius = this.size.minDimension / 2
+                //compose의 drawBehind 기능을 활용하여 5가지 감정 상태에 대한 표정을 그렸음
 
-                // 얼굴 배경
+                // 머리통
                 drawCircle(
                     color = mood.color,
                     radius = radius,
                     center = center
                 )
 
-                // 얼굴 테두리
+                // 머리통 테두리
                 drawCircle(
                     color = Color.White.copy(alpha = 0.3f),
                     radius = radius,
@@ -209,8 +208,7 @@ fun MoodFace(mood: Mood, size: Float = 60f) {
     )
 }
 
-// 날짜 데이터 클래스
-data class SimpleDate(
+data class SimpleDate( //날짜 데이터 클래스
     val year: Int,
     val month: Int,
     val day: Int
@@ -227,11 +225,10 @@ data class SimpleDate(
     fun toDisplayString(): String = "${month}월 ${day}일"
 }
 
-// 기분 데이터 클래스
-data class MoodEntry(
-    val date: SimpleDate,
-    val mood: Mood,
-    val note: String = ""
+data class MoodEntry( //moodEntry 데이터 클래스
+    val date: SimpleDate, //언제 기록했는지
+    val mood: Mood, //어떤 기분
+    val note: String = "" //추가 메모
 )
 
 enum class Mood(val emoji: String, val color: Color, val label: String) {
@@ -259,6 +256,7 @@ class MainActivity : ComponentActivity() {
 fun MoodDiaryApp() {
     var selectedTab by remember { mutableStateOf(0) }
     var moodEntries by remember { mutableStateOf<Map<SimpleDate, MoodEntry>>(emptyMap()) }
+    //중복 방지를 위해 map구조를 활용함. 빠른 검색도 가능하고, 특정 날짜 기록 확인도 쉬움(지능 이슈로 구현 못함)
 
     Scaffold(
         topBar = {
